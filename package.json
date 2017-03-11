@@ -1,0 +1,9 @@
+{
+  "name" : "react",
+  "version" : "0.1",
+  "author" : "admin",
+  "dependencies" : {
+    "sdk" : "default"
+  },
+  "server" : "server.js"
+}
