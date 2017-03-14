@@ -6,12 +6,14 @@ module.exports.start = function(){
         // This must be defined here so microbes.js can access it
         _globalAddressMap = {};
 
+        var _lastMessages = [];
+
         var DustyPlates = load("dusty-plates"),
             dustyData = DustyPlates.dustyData();
 
         // This will handle our app data regularly..
         app.registerMethod("appData", function(msg){
-            msg.reply({name: dustyData.appName});
+            msg.reply({name: dustyData.appName, messages: _lastMessages});
         });
 
         // This will handle secure messages..
@@ -23,7 +25,14 @@ module.exports.start = function(){
             if(!_globalAddressMap.hasOwnProperty(body.address) || _globalAddressMap[body.address] != body.token){
                 return;
             }
-            app.messageBus().publish('sdk.public._push_.publicMessages', {message: body.message, address: body.address});
+            var message = {message: body.message, address: body.address};
+
+            // TODO we need to probably not save messages that should be filtered out..
+            if(_lastMessages.length >= 5){
+                _lastMessages = _lastMessages.slice(1, 5);
+            }
+            _lastMessages.push(message);
+            app.messageBus().publish('sdk.public._push_.publicMessages', message);
         });
 
         var dustyPlates = DustyPlates.initialize(true);
