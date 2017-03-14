@@ -1,9 +1,12 @@
 {
-  "name" : "react",
+  "name" : "radchat",
   "version" : "0.1",
   "author" : "admin",
   "dependencies" : {
-    "sdk" : "default"
+    "sdk" : "default",
+    "dusty-plates" : "default",
+    "uuid" : "default"
   },
-  "server" : "server.js"
+  "server" : "server.js",
+  "webFolder" : "./web"
 }

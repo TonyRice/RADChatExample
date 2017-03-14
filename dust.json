@@ -1,0 +1,9 @@
+{
+  "appName" : "React/Automately/DustJS Example",
+  "readFile:bundleData" : [
+    "./modules/sdk/sdk.client.js",
+    "./lib/react/react.js",
+    "./lib/react/react-dom.js",
+    "./lib/app/app.js"
+  ]
+}

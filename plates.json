@@ -1,0 +1,4 @@
+{
+  "readFile:/index.html:text/html" : "./lib/app/app.tl.html",
+  "/bundle.js$:application/javascript" : "{bundleData|s}"
+}

@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>{appTitle}</title>
+    <style type="text/css">
+        .messageBox {
+            box-sizing: border-box;
+            width: 300px;
+            height: 200px;
+            border: 2px solid #222222;
+            border-radius: 5px;
+            overflow-y: scroll;
+        }
+        .messageBar {
+            box-sizing: border-box;
+            width: 300px;
+            border: 2px solid #444444;
+            border-radius: 5px;
+            margin: 6px 0 0 0;
+            outline: none;
+            padding: 3px;
+        }
+        .messageIp {
+            font-size: 10px;
+            font-weight: bold;
+            color: #c10000;
+        }
+    </style>
+</head>
+<body>
+{@eq key=renderDustyReact value="true" type="boolean"}
+<div id="root">{react_content|s}</div>
+{:else}
+{last_error}
+{/eq}
+<script type="application/javascript">
+    {@eq key=getRequestAddress value="true" type="boolean"}
+    window.my_address = "{request_address|s}";
+    window.my_token = "{request_token|s}";
+    {:else}
+    alert("Error!");
+    {/eq}
+</script>
+<script src="/bundle.js"></script>
+</body>
+</html>
