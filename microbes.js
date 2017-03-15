@@ -17,6 +17,9 @@ var dustyData = load('dusty-plates').dustyData();
 // Here we finally pre-render the ChatApp so that we can have faster page loads
 var preRenderReact = ReactDOMServer.renderToString(createFactory(ChatApp)({name : dustyData.appName}));
 
+var addressTokens = require('databus').create().getMap('private.radchat.auth_tokens');
+
+
 // Here we export renderDustyReact, and getRequestAddress which make it so our app.tl.html template
 // can retrieve the ReactJS app html and the proper IP address for the client. We retrieve the X-Forwarded-For
 // header since this app running on Automately Cloud will behind a load balancer
@@ -29,12 +32,12 @@ module.exports = {
     getRequestAddress: function(chk, ctx){
         var address = ctx.currentRequest().headers()["X-Forwarded-For"][0];
 
-        if(!_globalAddressMap.hasOwnProperty(address)){
-            _globalAddressMap[address] = UUID.generate();
+        if(!addressTokens.hasOwnProperty(address)){
+            addressTokens[address] = UUID.generate();
         }
 
         ctx.stack.head.request_address = address;
-        ctx.stack.head.request_token = _globalAddressMap[address];
+        ctx.stack.head.request_token = addressTokens[address];
         return true;
     }
 };

@@ -3,8 +3,7 @@ var App = require("sdk").App;
 module.exports.start = function(){
     App.register("package.json", function (app) {
 
-        // This must be defined here so microbes.js can access it
-        _globalAddressMap = {};
+        var addressTokens = require('databus').create().getMap('private.radchat.auth_tokens');
 
         var _lastMessages = [];
 
@@ -22,7 +21,8 @@ module.exports.start = function(){
             if(body.message.trim() == '' || !body.hasOwnProperty('token') || !body.hasOwnProperty('address')){
                 return;
             }
-            if(!_globalAddressMap.hasOwnProperty(body.address) || _globalAddressMap[body.address] != body.token){
+            if(!addressTokens.hasOwnProperty(body.address) || addressTokens[body.address] != body.token){
+                print("Blocking message from " + body.address + " Token (" + body.token + ") Needed Token (" + addressTokens[body.address] + ")");
                 return;
             }
             var message = {message: body.message, address: body.address};
